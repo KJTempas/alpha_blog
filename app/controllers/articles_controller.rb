@@ -12,6 +12,10 @@ class ArticlesController < ApplicationController
         @article = Article.new #so first time page loads, @article.errors doesn't cause crash
     end
 
+    def edit
+        @article = Article.find(params[:id])
+    end
+
     def create
         #render plain: params[:article] #this will show the info in the browser
         #after you click Save
@@ -27,4 +31,16 @@ class ArticlesController < ApplicationController
         end
     end
     
+    def update
+        #fin the article instance that has the Id provided
+        @article = Article.find(params[:id])
+        #white list - make sure info valid
+        if @article.update(params.require(:article).permit(:title, :description))
+            flash[:notice] = "article was updated successfully."
+            redirect_to @article  #the show path 
+        else
+           render 'edit' #show the edit form again so validation errors can be corrected
+        end
+    end
+
 end
