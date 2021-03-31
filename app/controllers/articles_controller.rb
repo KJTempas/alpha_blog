@@ -1,11 +1,11 @@
 class ArticlesController < ApplicationController
-
-    def show
-        @article = Article.find(params[:id])
+    #this is a helper method; before the methods in [], do the set_article method
+    before_action :set_article, only: [:show, :edit, :update, :destroy]
+    def show  
     end
 
     def index
-        @articles = Article.all
+       @articles = Article.all
     end
 
     def new
@@ -13,14 +13,14 @@ class ArticlesController < ApplicationController
     end
 
     def edit
-        @article = Article.find(params[:id])
+        
     end
 
     def create
         #render plain: params[:article] #this will show the info in the browser
         #after you click Save
         #require the top level key of article & permit title and desc to be used to create new article object(instance var)
-        @article = Article.new(params.require(:article).permit(:title, :description))
+        @article = Article.new(article_params)
         #render plain: @article.inspect #then can see object; can also to @article.inspect
         if @article.save
             flash[:notice]= "Article was created successfully."
@@ -33,9 +33,8 @@ class ArticlesController < ApplicationController
     
     def update
         #fin the article instance that has the Id provided
-        @article = Article.find(params[:id])
         #white list - make sure info valid
-        if @article.update(params.require(:article).permit(:title, :description))
+        if @article.update(article_params) #calling article_params method below
             flash[:notice] = "article was updated successfully."
             redirect_to @article  #the show path 
         else
@@ -44,8 +43,17 @@ class ArticlesController < ApplicationController
     end
 
     def destroy
-        @article = Article.find(params[:id])
         @article.destroy
         redirect_to articles_path
+    end
+
+    private #below methods only available to this controller
+
+    def set_article
+        @article = Article.find(params[:id])
+    end
+
+    def article_params
+        params.require(:article).permit(:title, :description)
     end
 end
