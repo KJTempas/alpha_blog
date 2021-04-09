@@ -35,7 +35,7 @@ class ArticlesController < ApplicationController
         #fin the article instance that has the Id provided
         #white list - make sure info valid
         if @article.update(article_params) #calling article_params method below
-            flash[:notice] = "article was updated successfully."
+            flash[:notice] = "Article was updated successfully."
             redirect_to @article  #the show path 
         else
            render 'edit' #show the edit form again so validation errors can be corrected
