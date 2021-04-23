@@ -21,6 +21,7 @@ class ArticlesController < ApplicationController
         #after you click Save
         #require the top level key of article & permit title and desc to be used to create new article object(instance var)
         @article = Article.new(article_params)
+        @article.user = User.first
         #render plain: @article.inspect #then can see object; can also to @article.inspect
         if @article.save
             flash[:notice]= "Article was created successfully."
