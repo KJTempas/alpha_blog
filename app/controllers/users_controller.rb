@@ -2,12 +2,13 @@ class UsersController < ApplicationController
   
     def show
         @user = User.find(params[:id])
-        #@articles = @user.articles
-        @articles = @user.articles.paginate(page: params[:page], per_page: 4)  
+        #@articles = @user.articles #before pagination
+        @articles = @user.articles.paginate(page: params[:page], per_page: 4)
+         
     end
 
     def index
-        #@users = User.all - before pagination
+        #@users = User.all # - before pagination
         @users = User.paginate(page: params[:page], per_page: 4)  
     end
 

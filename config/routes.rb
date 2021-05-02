@@ -6,4 +6,7 @@ Rails.application.routes.draw do
   get 'signup', to: 'users#new' #get 'route' direct to controll#method
   #post 'users', to: 'users#create' #one way to post request for users gets sent to users controller create method
   resources :users, except: [:new] #will generate all routes for users except new user
+  get 'login', to: 'sessions#new'
+  post 'login', to: 'sessions#create'
+  delete 'logout', to: 'sessions#destroy'
 end
