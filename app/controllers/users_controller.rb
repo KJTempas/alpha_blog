@@ -1,15 +1,16 @@
 class UsersController < ApplicationController
-  
+    #before performing the method for show, edit or update, do the set_user method(below private method)
+  before_action :set_user, only: [:show, :edit, :update]
+
     def show
-        @user = User.find(params[:id])
-        #@articles = @user.articles #before pagination
-        @articles = @user.articles.paginate(page: params[:page], per_page: 4)
+        @articles = @user.articles #before pagination
+        #@articles = @user.articles.paginate(page: params[:page], per_page: 4)
          
     end
 
     def index
-        #@users = User.all # - before pagination
-        @users = User.paginate(page: params[:page], per_page: 4)  
+        @users = User.all # - before pagination
+        #@users = User.paginate(page: params[:page], per_page: 4)  
     end
 
     def index
@@ -21,11 +22,9 @@ class UsersController < ApplicationController
     end
 
     def edit #Find user by id
-        @user = User.find(params[:id])
     end
 
     def update #update user
-        @user = User.find(params[:id])
         if @user.update(user_params)#user params method white lists incoming info
             flash[:notice] = "Your account information was successfully updated"
             redirect_to @user
@@ -40,6 +39,7 @@ class UsersController < ApplicationController
         #type continue in terminal to resume action
         @user = User.new(user_params)
         if @user.save
+            session[:user_id] = @user.id 
             flash[:notice] = "Welcome to the Alpha Blog, #{@user.username}, you have successfully signed up"
             redirect_to articles_path
         else
@@ -52,4 +52,8 @@ class UsersController < ApplicationController
         params.require(:user).permit(:username, :email, :password)
     end
 
+    def set_user
+        @user = User.find(params[:id])
     end
+
+end
