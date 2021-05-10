@@ -1,8 +1,8 @@
 class UsersController < ApplicationController
     #before performing the method for show, edit or update, do the set_user method(below private method)
-  before_action :set_user, only: [:show, :edit, :update]
+  before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :require_user, only: [:edit, :update]
-  before_action :require_same_user, only: [:edit, :update]
+  before_action :require_same_user, only: [:edit, :update, :destroy]
 
 
     def show
@@ -48,6 +48,13 @@ class UsersController < ApplicationController
         else
             render 'new'
         end
+    end
+
+    def destroy
+        @user.destroy
+        session[:user_id] = nil #must do this to avoid crash user is deleted
+        flash[:notice] = "Account and all associated articles successfully deleted"
+        redirect_to articles_path
     end
 
     private
