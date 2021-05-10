@@ -1,6 +1,9 @@
 class UsersController < ApplicationController
     #before performing the method for show, edit or update, do the set_user method(below private method)
   before_action :set_user, only: [:show, :edit, :update]
+  before_action :require_user, only: [:edit, :update]
+  before_action :require_same_user, only: [:edit, :update]
+
 
     def show
         @articles = @user.articles #before pagination
@@ -56,4 +59,10 @@ class UsersController < ApplicationController
         @user = User.find(params[:id])
     end
 
+    def require_same_user
+        if current_user != @user
+            flash[:alert] = "You can only edit your own account"
+            redirect_to @user
+        end
+    end
 end
