@@ -8,4 +8,17 @@ module ApplicationHelper
         image_tag(gravatar_url, alt: user.username, class: "rounded shadow mx-auto d-block")
     end
 
+#info from http://geekhmer.github.io/blog/2016/02/10/rails-flash-messages-styles/
+    def bootstrap_class_for(flash_type)
+        case flash_type
+            when "alert"
+                "alert-danger"
+            when "notice"
+                "alert-success"
+            else  
+                flash_type.to_s    
+            end
+        end
+
+
 end
