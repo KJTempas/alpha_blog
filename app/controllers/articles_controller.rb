@@ -22,7 +22,6 @@ class ArticlesController < ApplicationController
     end
 
     def create
-        byebug
         #render plain: params[:article] #this will show the info in the browser
         #after you click Save
         #require the top level key of article & permit title and desc to be used to create new article object(instance var)
