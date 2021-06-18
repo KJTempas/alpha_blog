@@ -39,7 +39,7 @@ class ArticlesController < ApplicationController
     end
     
     def update
-        #fin the article instance that has the Id provided
+        #find the article instance that has the Id provided
         #white list - make sure info valid
         if @article.update(article_params) #calling article_params method below
             flash[:notice] = "Article was updated successfully."
