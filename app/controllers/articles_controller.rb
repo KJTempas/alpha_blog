@@ -6,6 +6,7 @@ class ArticlesController < ApplicationController
     before_action :require_same_user, only: [:edit, :update, :destroy]
 
     def show  
+        @article = Article.find(params[:id])
     end
 
     def index
@@ -31,7 +32,6 @@ class ArticlesController < ApplicationController
         #render plain: @article.inspect #then can see object; can also to @article.inspect
         if @article.save
             flash[:notice]= "Article was created successfully."
-        #redirect_to article_path(@article)#long form
             redirect_to @article #redirects to show this article   
         else #show the new form again
            render 'new' 
